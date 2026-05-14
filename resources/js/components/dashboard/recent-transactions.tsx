@@ -1,7 +1,16 @@
-import { ArrowDownLeft, ArrowUpRight, ArrowRightLeft } from 'lucide-react';
+import { ArrowDownLeft, ArrowRightLeft, ArrowUpRight } from 'lucide-react';
 import { useState } from 'react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { StatusBadge } from '@/components/ui/status-badge';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 
 type Transaction = {
@@ -11,7 +20,7 @@ type Transaction = {
     item: string;
     type: 'in' | 'out' | 'internal';
     quantity: string;
-    status: 'Completed' | 'Pending' | 'Failed';
+    status: 'completed' | 'pending' | 'failed';
 };
 
 const transactions: Transaction[] = [
@@ -22,7 +31,7 @@ const transactions: Transaction[] = [
         item: 'Main CPU Unit Gen 4',
         type: 'in',
         quantity: '+250',
-        status: 'Completed',
+        status: 'completed',
     },
     {
         id: 2,
@@ -31,7 +40,7 @@ const transactions: Transaction[] = [
         item: 'Packing Tape Reinforced',
         type: 'out',
         quantity: '-48',
-        status: 'Completed',
+        status: 'completed',
     },
     {
         id: 3,
@@ -40,7 +49,7 @@ const transactions: Transaction[] = [
         item: 'Storage Rack Heavy Duty',
         type: 'internal',
         quantity: '5',
-        status: 'Pending',
+        status: 'pending',
     },
     {
         id: 4,
@@ -49,7 +58,7 @@ const transactions: Transaction[] = [
         item: 'Thermal Printer Unit',
         type: 'out',
         quantity: '-12',
-        status: 'Failed',
+        status: 'failed',
     },
     {
         id: 5,
@@ -58,7 +67,7 @@ const transactions: Transaction[] = [
         item: 'Power Supply Module 750W',
         type: 'in',
         quantity: '+80',
-        status: 'Completed',
+        status: 'completed',
     },
     {
         id: 6,
@@ -67,7 +76,7 @@ const transactions: Transaction[] = [
         item: 'USB-C Industrial Cable',
         type: 'out',
         quantity: '-120',
-        status: 'Completed',
+        status: 'completed',
     },
     {
         id: 7,
@@ -76,7 +85,7 @@ const transactions: Transaction[] = [
         item: 'Warehouse Bin Large',
         type: 'internal',
         quantity: '18',
-        status: 'Pending',
+        status: 'pending',
     },
     {
         id: 8,
@@ -85,11 +94,21 @@ const transactions: Transaction[] = [
         item: 'Barcode Label Roll',
         type: 'out',
         quantity: '-300',
-        status: 'Failed',
+        status: 'failed',
     },
 ];
 
 const previewTransactionCount = 3;
+const dashboardTransactionLimit = 10;
+
+const columns = [
+    { label: 'Date', className: 'w-1/6' },
+    { label: 'SKU', className: 'w-1/6' },
+    { label: 'Item', className: 'w-1/6' },
+    { label: 'Type', className: 'w-1/6' },
+    { label: 'Qty', className: 'w-1/6' },
+    { label: 'Status', className: 'w-1/6' },
+];
 
 const typeConfig = {
     in: {
@@ -109,18 +128,23 @@ const typeConfig = {
     },
 };
 
-const statusClassName = {
-    Completed: 'bg-green-100 text-green-700',
-    Pending: 'bg-yellow-100 text-yellow-700',
-    Failed: 'bg-red-100 text-red-700',
+const statusLabel: Record<Transaction['status'], string> = {
+    completed: 'Completed',
+    pending: 'Pending',
+    failed: 'Failed',
 };
 
 export function RecentTransactions() {
     const [showAll, setShowAll] = useState(false);
-    const hasMoreTransactions = transactions.length > previewTransactionCount;
+    const dashboardTransactions = transactions.slice(
+        0,
+        dashboardTransactionLimit,
+    );
+    const hasMoreTransactions =
+        dashboardTransactions.length > previewTransactionCount;
     const visibleTransactions = showAll
-        ? transactions
-        : transactions.slice(0, previewTransactionCount);
+        ? dashboardTransactions
+        : dashboardTransactions.slice(0, previewTransactionCount);
 
     return (
         <Card className="rounded-2xl border-border/60 shadow-sm">
@@ -139,60 +163,42 @@ export function RecentTransactions() {
                 </button>
             </CardHeader>
 
-            <CardContent className="overflow-x-auto">
-                <table className="w-full table-fixed border-collapse">
-                    <thead>
-                        <tr className="border-b border-border">
-                            <th className="w-1/6 py-3 text-left text-xs font-medium tracking-wide text-muted-foreground uppercase">
-                                Date
-                            </th>
+            <CardContent>
+                <Table className="table-fixed">
+                    <TableHeader>
+                        <TableRow>
+                            {columns.map((column) => (
+                                <TableHead
+                                    key={column.label}
+                                    className={column.className}
+                                >
+                                    {column.label}
+                                </TableHead>
+                            ))}
+                        </TableRow>
+                    </TableHeader>
 
-                            <th className="w-1/6 py-3 text-left text-xs font-medium tracking-wide text-muted-foreground uppercase">
-                                SKU
-                            </th>
-
-                            <th className="w-1/6 py-3 text-left text-xs font-medium tracking-wide text-muted-foreground uppercase">
-                                Item
-                            </th>
-
-                            <th className="w-1/6 py-3 text-center text-xs font-medium tracking-wide text-muted-foreground uppercase">
-                                Type
-                            </th>
-
-                            <th className="w-1/6 py-3 text-center text-xs font-medium tracking-wide text-muted-foreground uppercase">
-                                Qty
-                            </th>
-
-                            <th className="w-1/6 py-3 text-center text-xs font-medium tracking-wide text-muted-foreground uppercase">
-                                Status
-                            </th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
+                    <TableBody>
                         {visibleTransactions.map((transaction) => {
                             const type = typeConfig[transaction.type];
                             const TypeIcon = type.icon;
 
                             return (
-                                <tr
-                                    key={transaction.id}
-                                    className="border-b border-border/50 transition-colors hover:bg-muted/40"
-                                >
-                                    <td className="py-4 text-sm whitespace-nowrap">
+                                <TableRow key={transaction.id}>
+                                    <TableCell className="whitespace-nowrap">
                                         {transaction.date}
-                                    </td>
+                                    </TableCell>
 
-                                    <td className="py-4 font-mono text-sm font-medium text-primary">
+                                    <TableCell className="font-mono font-medium text-primary">
                                         {transaction.sku}
-                                    </td>
+                                    </TableCell>
 
-                                    <td className="truncate py-4 text-sm font-medium">
+                                    <TableCell className="truncate font-medium">
                                         {transaction.item}
-                                    </td>
+                                    </TableCell>
 
-                                    <td className="py-4">
-                                        <div className="flex items-center justify-center gap-2 text-sm">
+                                    <TableCell>
+                                        <div className="flex items-center justify-center gap-2">
                                             <TypeIcon
                                                 className={cn(
                                                     'h-4 w-4',
@@ -201,44 +207,42 @@ export function RecentTransactions() {
                                             />
                                             <span>{type.label}</span>
                                         </div>
-                                    </td>
+                                    </TableCell>
 
-                                    <td className="py-4 text-center text-sm font-semibold">
+                                    <TableCell className="font-semibold">
                                         {transaction.quantity}
-                                    </td>
+                                    </TableCell>
 
-                                    <td className="py-4 text-center">
-                                        <span
-                                            className={cn(
-                                                'inline-flex rounded-full px-3.5 py-1.5 text-xs font-medium',
-                                                statusClassName[
-                                                    transaction.status
-                                                ],
-                                            )}
+                                    <TableCell>
+                                        <StatusBadge
+                                            status={transaction.status}
                                         >
-                                            {transaction.status}
-                                        </span>
-                                    </td>
-                                </tr>
+                                            {statusLabel[transaction.status]}
+                                        </StatusBadge>
+                                    </TableCell>
+                                </TableRow>
                             );
                         })}
 
                         {!showAll && hasMoreTransactions && (
-                            <tr className="border-b border-border/50 transition-colors hover:bg-muted/40">
-                                <td colSpan={6} className="py-4 text-center">
+                            <TableRow>
+                                <TableCell
+                                    colSpan={6}
+                                    className="p-0 text-center"
+                                >
                                     <button
                                         type="button"
                                         onClick={() => setShowAll(true)}
-                                        className="text-xl font-semibold tracking-widest text-muted-foreground hover:text-primary"
+                                        className="block w-full py-4 text-xl font-semibold tracking-widest text-muted-foreground hover:text-primary"
                                         aria-label="View all transactions"
                                     >
                                         ...
                                     </button>
-                                </td>
-                            </tr>
+                                </TableCell>
+                            </TableRow>
                         )}
-                    </tbody>
-                </table>
+                    </TableBody>
+                </Table>
             </CardContent>
         </Card>
     );

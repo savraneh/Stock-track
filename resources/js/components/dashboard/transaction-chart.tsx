@@ -22,6 +22,7 @@ const weeklyData = [
 const currentDay = new Date().getDay();
 const adjustedDay = currentDay === 0 ? 7 : currentDay;
 const data = weeklyData.slice(0, adjustedDay);
+const displayedDaysLabel = `Last ${data.length} ${data.length === 1 ? 'Day' : 'Days'}`;
 
 export function TransactionChart() {
     return (
@@ -37,7 +38,9 @@ export function TransactionChart() {
                     </p>
                 </div>
 
-                <div className="text-sm text-muted-foreground">Last 7 Days</div>
+                <div className="text-sm text-muted-foreground">
+                    {displayedDaysLabel}
+                </div>
             </CardHeader>
 
             <CardContent className="h-[260px] pt-4">

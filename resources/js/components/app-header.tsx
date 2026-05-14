@@ -73,7 +73,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
         <>
             <div className="border-b border-sidebar-border/80">
                 <div className="mx-auto flex h-16 items-center px-4 md:max-w-7xl">
-                    {/* Mobile Menu */}
+                    {/* Mobile Menu */}sssssss
                     <div className="lg:hidden">
                         <Sheet>
                             <SheetTrigger asChild>
@@ -133,7 +133,6 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                             </SheetContent>
                         </Sheet>
                     </div>
-
                     <Link
                         href={dashboard()}
                         prefetch
@@ -141,7 +140,6 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                     >
                         <AppLogo />
                     </Link>
-
                     {/* Desktop Navigation */}
                     <div className="ml-6 hidden h-full items-center space-x-6 lg:flex">
                         <NavigationMenu className="flex h-full items-stretch">
@@ -175,7 +173,6 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                             </NavigationMenuList>
                         </NavigationMenu>
                     </div>
-
                     <div className="ml-auto flex items-center space-x-2">
                         <div className="relative flex items-center space-x-1">
                             <Button
