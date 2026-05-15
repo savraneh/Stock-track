@@ -164,7 +164,7 @@ export function RecentTransactions() {
             </CardHeader>
 
             <CardContent>
-                <Table className="table-fixed">
+                <Table className="min-w-[900px] table-fixed">
                     <TableHeader>
                         <TableRow>
                             {columns.map((column) => (

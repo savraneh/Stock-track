@@ -38,7 +38,11 @@ export function Breadcrumbs({
                                             </BreadcrumbLink>
                                         )}
                                     </BreadcrumbItem>
-                                    {!isLast && <BreadcrumbSeparator />}
+                                    {!isLast && (
+                                        <span className="text-muted-foreground">
+                                            /
+                                        </span>
+                                    )}
                                 </Fragment>
                             );
                         })}

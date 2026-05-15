@@ -15,10 +15,11 @@ export default function Dashboard() {
                 <div className="grid gap-6 md:grid-cols-2 2xl:grid-cols-4">
                     <StatsCard
                         title="Total Items"
-                        value="12,840" //blm connect database
+                        value="12,840"
                         description="All inventory items"
                         icon={Boxes}
                         trend="up"
+                        href="/items"
                     />
 
                     <StatsCard

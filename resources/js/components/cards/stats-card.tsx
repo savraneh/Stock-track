@@ -1,22 +1,25 @@
-import { LucideIcon } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+import type { ReactNode } from 'react';
 
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card';
+import { Link } from '@inertiajs/react';
+
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 import { cn } from '@/lib/utils';
 
 interface StatsCardProps {
     title: string;
     value: string | number;
+
     description?: string;
+
     icon: LucideIcon;
 
     trend?: 'up' | 'down' | 'neutral';
+
+    footer?: ReactNode;
+
+    href?: string;
 
     className?: string;
 }
@@ -27,24 +30,29 @@ export function StatsCard({
     description,
     icon: Icon,
     trend = 'neutral',
+    footer,
+    href,
     className,
 }: StatsCardProps) {
-    return (
+    const cardContent = (
         <Card
             className={cn(
-                'border-border/60 bg-card shadow-sm transition-all duration-200 hover:shadow-md',
+                'min-h-40 justify-between border-border/60 bg-card shadow-sm transition-all duration-200',
+
+                href && 'cursor-pointer hover:-translate-y-1 hover:shadow-md',
+
                 className,
             )}
         >
-            <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-3">
-                <div className="space-y-1">
-                    <CardDescription className="text-xs font-medium tracking-wide uppercase">
+            <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-0">
+                <div>
+                    <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
                         {title}
-                    </CardDescription>
+                    </p>
 
-                    <CardTitle className="text-3xl font-bold tracking-tight">
+                    <h3 className="mt-3 text-3xl font-bold tracking-tight">
                         {value}
-                    </CardTitle>
+                    </h3>
                 </div>
 
                 <div
@@ -63,13 +71,27 @@ export function StatsCard({
                 </div>
             </CardHeader>
 
-            {description && (
-                <CardContent>
-                    <p className="text-sm text-muted-foreground">
-                        {description}
-                    </p>
+            {(description || footer) && (
+                <CardContent className="pt-0">
+                    {description && (
+                        <p className="text-sm text-muted-foreground">
+                            {description}
+                        </p>
+                    )}
+
+                    {footer && (
+                        <div className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
+                            {footer}
+                        </div>
+                    )}
                 </CardContent>
             )}
         </Card>
     );
+
+    if (href) {
+        return <Link href={href}>{cardContent}</Link>;
+    }
+
+    return cardContent;
 }
