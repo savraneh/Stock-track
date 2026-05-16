@@ -1,64 +1,34 @@
-import { SlidersHorizontal } from 'lucide-react';
+import { SlidersHorizontal, X } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-
-import { SearchInput } from '@/components/inventory/search-input';
 import { FilterSelect } from '@/components/inventory/filter-select';
+import { SearchInput } from '@/components/inventory/search-input';
+import type { InventoryFilterOption } from '@/types/inventory';
 
 interface FilterBarProps {
-    searchValue?: string;
-    onSearchChange?: (value: string) => void;
-
-    categoryValue?: string;
-    onCategoryChange?: (value: string) => void;
-
-    statusValue?: string;
-    onStatusChange?: (value: string) => void;
+    searchValue: string;
+    onSearchChange: (value: string) => void;
+    categoryValue: string;
+    onCategoryChange: (value: string) => void;
+    statusValue: string;
+    onStatusChange: (value: string) => void;
+    categoryOptions: InventoryFilterOption[];
+    statusOptions: InventoryFilterOption[];
+    hasActiveFilters?: boolean;
+    onResetFilters?: () => void;
 }
-
-const categoryOptions = [
-    {
-        label: 'All Categories',
-        value: 'all',
-    },
-    {
-        label: 'Electronics',
-        value: 'electronics',
-    },
-    {
-        label: 'Office Supplies',
-        value: 'office',
-    },
-];
-
-const statusOptions = [
-    {
-        label: 'Any Status',
-        value: 'all',
-    },
-    {
-        label: 'In Stock',
-        value: 'in-stock',
-    },
-    {
-        label: 'Low Stock',
-        value: 'low-stock',
-    },
-    {
-        label: 'Out of Stock',
-        value: 'out-of-stock',
-    },
-];
 
 export function FilterBar({
     searchValue,
     onSearchChange,
-
     categoryValue,
     onCategoryChange,
-
     statusValue,
     onStatusChange,
+    categoryOptions,
+    statusOptions,
+    hasActiveFilters = false,
+    onResetFilters,
 }: FilterBarProps) {
     return (
         <div className="flex flex-col gap-4 rounded-xl border bg-card p-4 lg:flex-row lg:items-center">
@@ -70,7 +40,7 @@ export function FilterBar({
                 />
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                 <FilterSelect
                     placeholder="Category"
                     options={categoryOptions}
@@ -85,7 +55,14 @@ export function FilterBar({
                     onValueChange={onStatusChange}
                 />
 
-                <Button variant="outline" size="icon">
+                {hasActiveFilters && (
+                    <Button type="button" variant="outline" onClick={onResetFilters} className="sm:w-auto">
+                        <X className="h-4 w-4" />
+                        Reset
+                    </Button>
+                )}
+
+                <Button type="button" variant="outline" size="icon" aria-label="Open advanced filters">
                     <SlidersHorizontal className="h-4 w-4" />
                 </Button>
             </div>

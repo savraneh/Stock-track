@@ -1,54 +1,87 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
+import { FilterSelect } from '@/components/inventory/filter-select';
 
 interface InventoryPaginationProps {
-    itemsPerPage: number;
-    onItemsPerPageChange: (value: number) => void;
     currentPage: number;
     totalPages: number;
+    itemsPerPage: number;
+    totalItems: number;
+    onPageChange: (page: number) => void;
+    onItemsPerPageChange: (value: number) => void;
 }
+
+const rowsPerPageOptions = [
+    { label: '5 rows', value: '5' },
+    { label: '10 rows', value: '10' },
+    { label: '25 rows', value: '25' },
+    { label: '50 rows', value: '50' },
+];
 
 export function InventoryPagination({
     currentPage,
     totalPages,
     itemsPerPage,
+    totalItems,
+    onPageChange,
     onItemsPerPageChange,
 }: InventoryPaginationProps) {
+    const canGoPrevious = currentPage > 1;
+    const canGoNext = currentPage < totalPages;
+
     return (
-        <div className="flex flex-col gap-4 border-t p-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-4 border-t px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm text-muted-foreground">
-                Page {currentPage} of {totalPages}
+                Showing page{' '}
+                <span className="font-medium text-foreground">
+                    {currentPage}
+                </span>{' '}
+                of{' '}
+                <span className="font-medium text-foreground">
+                    {totalPages}
+                </span>
+                <span className="hidden sm:inline">
+                    {' '}
+                    · {totalItems.toLocaleString()} items
+                </span>
             </p>
 
-            <div className="flex items-center gap-2">
-                <select
-                    value={itemsPerPage}
-                    onChange={(event) =>
-                        onItemsPerPageChange(Number(event.target.value))
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <FilterSelect
+                    aria-label="Rows per page"
+                    options={rowsPerPageOptions}
+                    value={String(itemsPerPage)}
+                    onValueChange={(value) =>
+                        onItemsPerPageChange(Number(value))
                     }
-                    className="h-9 rounded-md border border-input bg-background px-3 text-sm"
-                >
-                    <option value={5}>5 rows</option>
-                    <option value={10}>10 rows</option>
-                    <option value={25}>25 rows</option>
-                    <option value={50}>50 rows</option>
-                </select>
-                <Button
-                    variant="outline"
-                    size="icon"
-                    disabled={currentPage === 1}
-                >
-                    <ChevronLeft className="h-4 w-4" />
-                </Button>
+                    className="w-full sm:w-[130px]"
+                    side="top"
+                />
 
-                <Button
-                    variant="outline"
-                    size="icon"
-                    disabled={currentPage === totalPages}
-                >
-                    <ChevronRight className="h-4 w-4" />
-                </Button>
+                <div className="flex items-center gap-2">
+                    <Button
+                        type="button"
+                        variant="outline"
+                        size="icon"
+                        disabled={!canGoPrevious}
+                        onClick={() => onPageChange(currentPage - 1)}
+                        aria-label="Go to previous page"
+                    >
+                        <ChevronLeft className="h-4 w-4" />
+                    </Button>
+
+                    <Button
+                        type="button"
+                        variant="outline"
+                        size="icon"
+                        disabled={!canGoNext}
+                        onClick={() => onPageChange(currentPage + 1)}
+                        aria-label="Go to next page"
+                    >
+                        <ChevronRight className="h-4 w-4" />
+                    </Button>
+                </div>
             </div>
         </div>
     );
