@@ -1,25 +1,63 @@
 import { Head } from '@inertiajs/react';
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
+import { Boxes, AlertTriangle, ReceiptText, LayoutGrid } from 'lucide-react';
+import { StatsCard } from '@/components/cards/stats-card';
+import { TransactionChart } from '@/components/dashboard/transaction-chart';
+import { CriticalAlerts } from '@/components/dashboard/critical-alerts';
+import { RecentTransactions } from '@/components/dashboard/recent-transactions';
 import { dashboard } from '@/routes';
 
 export default function Dashboard() {
     return (
         <>
             <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+            <div className="flex flex-1 flex-col gap-6 p-6">
+                {/* STATS CARDS */}
+                <div className="grid gap-6 md:grid-cols-2 2xl:grid-cols-4">
+                    <StatsCard
+                        title="Total Items"
+                        value="12,840"
+                        description="All inventory items"
+                        icon={Boxes}
+                        trend="up"
+                        href="/items"
+                    />
+
+                    <StatsCard
+                        title="Low Stock"
+                        value="42" //blm connect database
+                        description="Items below minimum stock"
+                        icon={AlertTriangle}
+                        trend="down"
+                    />
+
+                    <StatsCard
+                        title="Transactions"
+                        value="156" //blm connect database
+                        description="Today's transactions"
+                        icon={ReceiptText}
+                        trend="neutral"
+                    />
+
+                    <StatsCard
+                        title="Categories"
+                        value="24" //blm connect database
+                        description="Registered categories"
+                        icon={LayoutGrid}
+                        trend="up"
+                    />
+                </div>
+                {/* ANALYTICS */}
+                <div className="grid gap-6 xl:grid-cols-12">
+                    <div className="xl:col-span-8">
+                        <TransactionChart />
                     </div>
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+                    <div className="xl:col-span-4">
+                        <CriticalAlerts />
                     </div>
                 </div>
-                <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+                {/* TRANSACTIONS */}
+                <div className="min-h-[420px] rounded-2xl border bg-card">
+                    <RecentTransactions />
                 </div>
             </div>
         </>

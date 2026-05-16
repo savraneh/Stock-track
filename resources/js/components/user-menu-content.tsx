@@ -46,7 +46,10 @@ export function UserMenuContent({ user }: Props) {
                 </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
+            <DropdownMenuItem
+                asChild
+                className="text-red-500 focus:bg-red-500/10 focus:text-red-500"
+            >
                 <Link
                     className="block w-full cursor-pointer"
                     href={logout()}
@@ -54,7 +57,7 @@ export function UserMenuContent({ user }: Props) {
                     onClick={handleLogout}
                     data-test="logout-button"
                 >
-                    <LogOut className="mr-2" />
+                    <LogOut className="mr-2 text-red-500" />
                     Log out
                 </Link>
             </DropdownMenuItem>
