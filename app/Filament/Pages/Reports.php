@@ -19,7 +19,7 @@ class Reports extends Page
 
     protected static ?string $navigationLabel = 'Reports';
 
-    protected static ?string $title = 'Laporan Histori Stok';
+    protected static ?string $title = 'Stock History Report';
 
     protected string $view = 'filament.pages.reports';
 

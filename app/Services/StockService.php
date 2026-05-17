@@ -22,7 +22,7 @@ class StockService
 
         if ($quantity <= 0) {
             throw ValidationException::withMessages([
-                'quantity' => 'Jumlah transaksi harus lebih dari 0.',
+                'quantity' => 'Transaction quantity must be greater than 0.',
             ]);
         }
 
@@ -39,7 +39,7 @@ class StockService
 
             if ($stockAfter < 0) {
                 throw ValidationException::withMessages([
-                    'quantity' => 'Stok barang tidak mencukupi. Stok saat ini: '.$stockBefore.'.',
+                    'quantity' => 'Insufficient stock. Current stock: '.$stockBefore.'.',
                 ]);
             }
 

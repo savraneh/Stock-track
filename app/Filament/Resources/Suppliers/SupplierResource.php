@@ -35,20 +35,20 @@ class SupplierResource extends Resource
 
     protected static ?string $modelLabel = 'Supplier';
 
-    protected static ?string $pluralModelLabel = 'Supplier';
+    protected static ?string $pluralModelLabel = 'Suppliers';
 
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
             TextInput::make('name')
-                ->label('Nama Supplier')
+                ->label('Supplier Name')
                 ->required()
                 ->maxLength(255),
             TextInput::make('contact_person')
                 ->label('Contact Person')
                 ->maxLength(255),
             TextInput::make('phone')
-                ->label('Telepon')
+                ->label('Phone')
                 ->tel()
                 ->maxLength(255),
             TextInput::make('email')
@@ -56,7 +56,7 @@ class SupplierResource extends Resource
                 ->email()
                 ->maxLength(255),
             Textarea::make('address')
-                ->label('Alamat')
+                ->label('Address')
                 ->rows(4)
                 ->columnSpanFull(),
         ])->columns(2);
@@ -65,11 +65,11 @@ class SupplierResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->heading('Daftar Supplier')
-            ->description('Kelola semua data supplier di sini')
+            ->heading('Suppliers List')
+            ->description('Manage all supplier data here')
             ->headerActions([
                 Action::make('create')
-                    ->label('Tambah Supplier')
+                    ->label('Add Supplier')
                     ->icon('heroicon-o-plus')
                     ->color('primary')
                     ->url(fn(): string => static::getUrl('create')),
@@ -84,7 +84,7 @@ class SupplierResource extends Resource
                     ->searchable()
                     ->placeholder('-'),
                 TextColumn::make('phone')
-                    ->label('Telepon')
+                    ->label('Phone')
                     ->searchable()
                     ->placeholder('-'),
                 TextColumn::make('email')
@@ -92,7 +92,7 @@ class SupplierResource extends Resource
                     ->searchable()
                     ->placeholder('-'),
                 TextColumn::make('items_count')
-                    ->label('Jumlah Barang')
+                    ->label('Item Count')
                     ->counts('items')
                     ->badge()
                     ->sortable(),

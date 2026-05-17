@@ -11,9 +11,9 @@ enum TransactionType: string
     public function label(): string
     {
         return match ($this) {
-            self::StockIn => 'Barang Masuk',
-            self::StockOut => 'Barang Keluar',
-            self::Adjustment => 'Penyesuaian Stok',
+            self::StockIn => 'Stock In',
+            self::StockOut => 'Stock Out',
+            self::Adjustment => 'Stock Adjustment',
         };
     }
 

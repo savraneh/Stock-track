@@ -51,7 +51,7 @@ class User extends Authenticatable implements FilamentUser
         ], true);
     }
 
-    public function isAdminGudang(): bool
+    public function isWarehouseAdmin(): bool
     {
         return $this->role === UserRole::Admin;
     }
@@ -68,21 +68,21 @@ class User extends Authenticatable implements FilamentUser
 
     public function canManageMasterData(): bool
     {
-        return $this->isAdminGudang();
+        return $this->isWarehouseAdmin();
     }
 
     public function canCreateTransactions(): bool
     {
-        return $this->isAdminGudang();
+        return $this->isWarehouseAdmin();
     }
 
     public function canViewAnalytics(): bool
     {
-        return $this->isAdminGudang() || $this->isSupervisor();
+        return $this->isWarehouseAdmin() || $this->isSupervisor();
     }
 
     public function canViewRestockRecommendations(): bool
     {
-        return $this->isAdminGudang() || $this->isSupervisor() || $this->isPurchasing();
+        return $this->isWarehouseAdmin() || $this->isSupervisor() || $this->isPurchasing();
     }
 }

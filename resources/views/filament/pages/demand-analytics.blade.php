@@ -3,7 +3,7 @@
         <div class="rounded-2xl border border-slate-200 bg-white shadow-sm">
             <div class="border-b border-slate-200 p-5">
                 <h2 class="text-lg font-semibold text-slate-900">High Demand Items</h2>
-                <p class="text-sm text-slate-500">Barang paling sering keluar dari histori transaksi.</p>
+                <p class="text-sm text-slate-500">Items most frequently leaving from transaction history.</p>
             </div>
             <div class="divide-y divide-slate-100">
                 @forelse ($this->getHighDemandItems() as $item)
@@ -14,11 +14,11 @@
                         </div>
                         <div class="text-right">
                             <p class="text-xl font-bold text-blue-600">{{ (int) $item->total_out }}</p>
-                            <p class="text-xs text-slate-500">barang keluar</p>
+                            <p class="text-xs text-slate-500">items out</p>
                         </div>
                     </div>
                 @empty
-                    <div class="p-8 text-center text-slate-500">Belum ada transaksi barang keluar.</div>
+                    <div class="p-8 text-center text-slate-500">No outgoing item transactions yet.</div>
                 @endforelse
             </div>
         </div>
@@ -26,7 +26,7 @@
         <div class="rounded-2xl border border-slate-200 bg-white shadow-sm">
             <div class="border-b border-slate-200 p-5">
                 <h2 class="text-lg font-semibold text-slate-900">Low Demand Items</h2>
-                <p class="text-sm text-slate-500">Barang dengan pemakaian rendah atau belum pernah keluar.</p>
+                <p class="text-sm text-slate-500">Items with low usage or never left.</p>
             </div>
             <div class="divide-y divide-slate-100">
                 @forelse ($this->getLowDemandItems() as $item)
@@ -37,11 +37,11 @@
                         </div>
                         <div class="text-right">
                             <p class="text-xl font-bold text-slate-700">{{ (int) $item->total_out }}</p>
-                            <p class="text-xs text-slate-500">barang keluar</p>
+                            <p class="text-xs text-slate-500">items out</p>
                         </div>
                     </div>
                 @empty
-                    <div class="p-8 text-center text-slate-500">Belum ada data barang.</div>
+                    <div class="p-8 text-center text-slate-500">No item data yet.</div>
                 @endforelse
             </div>
         </div>

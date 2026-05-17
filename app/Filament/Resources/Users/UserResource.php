@@ -45,7 +45,7 @@ class UserResource extends Resource
     {
         return $schema->components([
             TextInput::make('name')
-                ->label('Nama')
+                ->label('Name')
                 ->required()
                 ->maxLength(255),
             TextInput::make('email')
@@ -66,25 +66,25 @@ class UserResource extends Resource
                 ->required(fn($operation): bool => $operation === 'create' || $operation === Operation::Create)
                 ->dehydrated(fn(?string $state): bool => filled($state))
                 ->maxLength(255)
-                ->helperText('Kosongkan saat edit jika password tidak ingin diganti.'),
+                ->helperText('Leave empty during edit if you do not want to change the password.'),
         ])->columns(2);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->heading('Daftar Users')
-            ->description('Kelola semua data users di sini')
+            ->heading('Users List')
+            ->description('Manage all user data here')
             ->headerActions([
                 Action::make('create')
-                    ->label('Tambah User')
+                    ->label('Add User')
                     ->icon('heroicon-o-plus')
                     ->color('primary')
                     ->url(fn(): string => static::getUrl('create')),
             ])
             ->columns([
                 TextColumn::make('name')
-                    ->label('Nama')
+                    ->label('Name')
                     ->alignStart()
                     ->searchable()
                     ->sortable(),
@@ -104,7 +104,7 @@ class UserResource extends Resource
                         UserRole::Purchasing => 'warning',
                     }),
                 TextColumn::make('created_at')
-                    ->label('Dibuat')
+                    ->label('Created')
                     ->alignStart()
                     ->dateTime('d M Y')
                     ->sortable(),

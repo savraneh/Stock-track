@@ -18,7 +18,7 @@ class StockMonitoring extends Page
 
     protected static ?string $navigationLabel = 'Stock Monitoring';
 
-    protected static ?string $title = 'Monitoring Stok Real-Time';
+    protected static ?string $title = 'Real-Time Stock Monitoring';
 
     protected string $view = 'filament.pages.stock-monitoring';
 

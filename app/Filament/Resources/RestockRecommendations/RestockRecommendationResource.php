@@ -26,9 +26,9 @@ class RestockRecommendationResource extends Resource
 
     protected static ?string $navigationLabel = 'Restock Recommendations';
 
-    protected static ?string $modelLabel = 'Rekomendasi Restock';
+    protected static ?string $modelLabel = 'Restock Recommendation';
 
-    protected static ?string $pluralModelLabel = 'Rekomendasi Restock';
+    protected static ?string $pluralModelLabel = 'Restock Recommendations';
 
     public static function form(Schema $schema): Schema
     {
@@ -38,8 +38,8 @@ class RestockRecommendationResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->heading('Daftar Rekomendasi Restock')
-            ->description('Kelola semua data rekomendasi restock di sini')
+            ->heading('Restock Recommendations List')
+            ->description('Manage all restock recommendation data here')
             ->columns([
                 TextColumn::make('generated_at')
                     ->label('Generated')
@@ -47,16 +47,16 @@ class RestockRecommendationResource extends Resource
                     ->dateTime('d M Y H:i')
                     ->sortable(),
                 TextColumn::make('item.code')
-                    ->label('Kode')
+                    ->label('Code')
                     ->alignStart()
                     ->searchable(),
                 TextColumn::make('item.name')
-                    ->label('Barang')
+                    ->label('Item')
                     ->alignStart()
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('item.stock')
-                    ->label('Stok')
+                    ->label('Stock')
                     ->alignStart()
                     ->numeric()
                     ->sortable(),
@@ -69,12 +69,12 @@ class RestockRecommendationResource extends Resource
                     ->alignCenter()
                     ->numeric(),
                 TextColumn::make('daily_usage_avg')
-                    ->label('Rata-rata / Hari')
+                    ->label('Daily Avg.')
                     ->alignCenter()
                     ->numeric(2)
                     ->sortable(),
                 TextColumn::make('recommended_amount')
-                    ->label('Saran Beli')
+                    ->label('Suggested Purchase')
                     ->alignCenter()
                     ->numeric()
                     ->badge()
@@ -96,12 +96,12 @@ class RestockRecommendationResource extends Resource
             ])
             ->headerActions([
                 Action::make('generate')
-                    ->label('Generate Rekomendasi')
+                    ->label('Generate Recommendations')
                     ->icon('heroicon-o-sparkles')
                     ->requiresConfirmation()
                     ->action(fn() => app(\App\Services\RestockRecommendationService::class)->generateAllCritical())
-                    ->visible(fn(): bool => auth()->user()?->isAdminGudang() ?? false)
-                    ->successNotificationTitle('Rekomendasi restock berhasil dibuat.'),
+                    ->visible(fn(): bool => auth()->user()?->isWarehouseAdmin() ?? false)
+                    ->successNotificationTitle('Restock recommendations generated successfully.'),
             ])
             ->defaultSort('generated_at', 'desc');
     }
@@ -123,7 +123,7 @@ class RestockRecommendationResource extends Resource
 
     public static function canDelete($record): bool
     {
-        return auth()->user()?->isAdminGudang() ?? false;
+        return auth()->user()?->isWarehouseAdmin() ?? false;
     }
 
     public static function getPages(): array

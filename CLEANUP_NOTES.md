@@ -1,6 +1,6 @@
 # Cleanup Notes
 
-File/folder yang dihapus karena tidak dipakai oleh versi Filament-first:
+Files/folders removed because they are unused by the Filament-first version:
 
 ```txt
 resources/js/
@@ -24,15 +24,15 @@ database/database.sqlite
 database/migrations/*two_factor*
 ```
 
-Dependency React/Inertia/Fortify/Wayfinder juga dihapus dari `composer.json`, `package.json`, dan `vite.config.ts`.
+Dependencies for React/Inertia/Fortify/Wayfinder were also removed from `composer.json`, `package.json`, and `vite.config.ts`.
 
-Yang dipertahankan:
+What is preserved:
 
 ```txt
 Filament Resources
 Filament Pages
 Filament Widgets
-Blade views untuk widget/page
+Blade views for widget/page
 Filament theme CSS
 Models + migrations + seeders
 Stock/Demand/Restock services
