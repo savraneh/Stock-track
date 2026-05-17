@@ -33,24 +33,24 @@ class CategoryResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $modelLabel = 'Kategori';
+    protected static ?string $modelLabel = 'Category';
 
-    protected static ?string $pluralModelLabel = 'Kategori';
+    protected static ?string $pluralModelLabel = 'Categories';
 
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
             TextInput::make('name')
-                ->label('Nama Kategori')
+                ->label('Category Name')
                 ->required()
                 ->maxLength(255)
                 ->unique(ignoreRecord: true),
             TextInput::make('storage_zone')
-                ->label('Zona Penyimpanan')
-                ->placeholder('Contoh: Rak A / Gudang 1')
+                ->label('Storage Zone')
+                ->placeholder('Example: Shelf A / Warehouse 1')
                 ->maxLength(255),
             Textarea::make('description')
-                ->label('Deskripsi')
+                ->label('Description')
                 ->rows(4)
                 ->columnSpanFull(),
         ])->columns(2);
@@ -59,35 +59,35 @@ class CategoryResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->heading('Daftar Kategori')
-            ->description('Kelola semua data kategori penyimpanan barang di sini')
+            ->heading('Categories List')
+            ->description('Manage all category data here')
             ->headerActions([
                 Action::make('create')
-                    ->label('Tambah Kategori')
+                    ->label('Add Category')
                     ->icon('heroicon-o-plus')
                     ->color('primary')
                     ->url(fn(): string => static::getUrl('create')),
             ])
             ->columns([
                 TextColumn::make('name')
-                    ->label('Kategori')
+                    ->label('Category')
                     ->alignStart()
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('storage_zone')
-                    ->label('Zona')
+                    ->label('Zone')
                     ->alignCenter()
                     ->badge()
                     ->placeholder('-')
                     ->searchable(),
                 TextColumn::make('items_count')
-                    ->label('Jumlah Barang')
+                    ->label('Item Count')
                     ->alignCenter()
                     ->counts('items')
                     ->badge()
                     ->sortable(),
                 TextColumn::make('updated_at')
-                    ->label('Update Terakhir')
+                    ->label('Last Updated')
                     ->alignCenter()
                     ->dateTime('d M Y H:i')
                     ->sortable(),

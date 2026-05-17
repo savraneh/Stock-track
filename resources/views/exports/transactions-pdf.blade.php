@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Laporan Histori Stok</title>
+    <title>Stock History Report</title>
     <style>
         body { font-family: DejaVu Sans, sans-serif; font-size: 11px; color: #0f172a; }
         h1 { font-size: 20px; margin-bottom: 4px; }
@@ -14,22 +14,22 @@
     </style>
 </head>
 <body>
-    <h1>Laporan Histori Stok STOCK-TRACK</h1>
-    <p>Dicetak pada {{ now()->format('d M Y H:i') }}</p>
+    <h1>Stock History Report STOCK-TRACK</h1>
+    <p>Printed on {{ now()->format('d M Y H:i') }}</p>
 
     <table>
         <thead>
             <tr>
-                <th>Tanggal</th>
-                <th>Kode</th>
-                <th>Barang</th>
-                <th>Kategori</th>
-                <th>Tipe</th>
-                <th>Jumlah</th>
-                <th>Sebelum</th>
-                <th>Sesudah</th>
-                <th>Petugas</th>
-                <th>Keterangan</th>
+                <th>Date</th>
+                <th>Code</th>
+                <th>Item</th>
+                <th>Category</th>
+                <th>Type</th>
+                <th>Quantity</th>
+                <th>Before</th>
+                <th>After</th>
+                <th>Officer</th>
+                <th>Notes</th>
             </tr>
         </thead>
         <tbody>

@@ -34,35 +34,35 @@ class TransactionResource extends Resource
 
     protected static ?string $navigationLabel = 'Transactions';
 
-    protected static ?string $modelLabel = 'Transaksi Stok';
+    protected static ?string $modelLabel = 'Stock Transaction';
 
-    protected static ?string $pluralModelLabel = 'Transaksi Stok';
+    protected static ?string $pluralModelLabel = 'Stock Transactions';
 
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            Section::make('Input Transaksi')
+            Section::make('Transaction Input')
                 ->schema([
                     Select::make('item_id')
-                        ->label('Barang')
+                        ->label('Item')
                         ->relationship('item', 'name')
-                        ->getOptionLabelFromRecordUsing(fn($record): string => "{$record->code} - {$record->name} (Stok: {$record->stock})")
+                        ->getOptionLabelFromRecordUsing(fn($record): string => "{$record->code} - {$record->name} (Stock: {$record->stock})")
                         ->searchable(['code', 'name'])
                         ->preload()
                         ->required(),
                     Select::make('type')
-                        ->label('Jenis Transaksi')
+                        ->label('Transaction Type')
                         ->options(TransactionType::options())
                         ->required()
                         ->native(false),
                     TextInput::make('quantity')
-                        ->label('Jumlah')
+                        ->label('Quantity')
                         ->required()
                         ->numeric()
                         ->minValue(1)
-                        ->helperText('Untuk penyesuaian stok, jumlah ini akan menjadi stok final.'),
+                        ->helperText('For stock adjustment, this quantity will be the final stock.'),
                     Textarea::make('description')
-                        ->label('Keterangan')
+                        ->label('Description')
                         ->rows(4)
                         ->columnSpanFull(),
                 ])
@@ -73,77 +73,77 @@ class TransactionResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->heading('Daftar Transaksi')
-            ->description('Kelola semua data transaksi di sini')
+            ->heading('Transactions List')
+            ->description('Manage all transaction data here')
             ->toolbarActions([
                 Action::make('create')
-                    ->label('Tambah Transaksi')
+                    ->label('Add Transaction')
                     ->icon('heroicon-o-plus')
                     ->color('primary')
                     ->url(fn(): string => static::getUrl('create')),
             ])
             ->columns([
                 TextColumn::make('created_at')
-                    ->label('Tanggal')
+                    ->label('Date')
                     ->alignStart()
                     ->dateTime('d M Y H:i')
                     ->sortable(),
                 TextColumn::make('item.code')
-                    ->label('Kode')
+                    ->label('Code')
                     ->alignStart()
                     ->searchable()
                     ->copyable(),
                 TextColumn::make('item.name')
-                    ->label('Barang')
+                    ->label('Item')
                     ->alignStart()
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('item.category.name')
-                    ->label('Kategori')
+                    ->label('Category')
                     ->alignCenter()
                     ->badge()
                     ->toggleable(),
                 TextColumn::make('type')
-                    ->label('Tipe')
+                    ->label('Type')
                     ->alignCenter()
                     ->badge()
                     ->formatStateUsing(fn(TransactionType $state): string => $state->label())
                     ->color(fn(TransactionType $state): string => $state->color()),
                 TextColumn::make('quantity')
-                    ->label('Jumlah')
+                    ->label('Quantity')
                     ->alignCenter()
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('stock_before')
-                    ->label('Sebelum')
+                    ->label('Before')
                     ->alignCenter()
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('stock_after')
-                    ->label('Sesudah')
+                    ->label('After')
                     ->alignCenter()
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('user.name')
-                    ->label('Petugas')
+                    ->label('Officer')
                     ->alignCenter()
                     ->placeholder('-')
                     ->toggleable(),
             ])
             ->filters([
                 SelectFilter::make('type')
-                    ->label('Tipe Transaksi')
+                    ->label('Transaction Type')
                     ->options(TransactionType::options()),
                 SelectFilter::make('item_id')
-                    ->label('Barang')
+                    ->label('Item')
                     ->relationship('item', 'name')
                     ->searchable()
                     ->preload(),
                 Filter::make('today')
-                    ->label('Hari Ini')
+                    ->label('Today')
                     ->query(fn(Builder $query): Builder => $query->whereDate('created_at', today())),
                 Filter::make('this_month')
-                    ->label('Bulan Ini')
+                    ->label('This Month')
                     ->query(fn(Builder $query): Builder => $query->whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])),
             ])
             ->headerActions([

@@ -131,7 +131,7 @@ body,
     display: none !important;
 }
 
-/* Tombol seperti Tambah Barang turun ke area page, bukan header */
+/* Buttons like Add Item drop to page area, not header */
 .fi-header-actions {
     position: absolute !important;
     top: calc(var(--stock-header-height) + 1.5rem) !important;

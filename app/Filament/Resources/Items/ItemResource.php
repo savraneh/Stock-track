@@ -39,26 +39,26 @@ class ItemResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $modelLabel = 'Barang';
+    protected static ?string $modelLabel = 'Item';
 
-    protected static ?string $pluralModelLabel = 'Barang';
+    protected static ?string $pluralModelLabel = 'Items';
 
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            Section::make('Identitas Barang')
+            Section::make('Item Identity')
                 ->schema([
                     TextInput::make('code')
-                        ->label('Kode / SKU')
+                        ->label('Code / SKU')
                         ->required()
                         ->maxLength(255)
                         ->unique(ignoreRecord: true),
                     TextInput::make('name')
-                        ->label('Nama Barang')
+                        ->label('Item Name')
                         ->required()
                         ->maxLength(255),
                     Select::make('category_id')
-                        ->label('Kategori')
+                        ->label('Category')
                         ->relationship('category', 'name')
                         ->searchable()
                         ->preload()
@@ -69,34 +69,34 @@ class ItemResource extends Resource
                         ->searchable()
                         ->preload(),
                     TextInput::make('unit')
-                        ->label('Satuan')
+                        ->label('Unit')
                         ->required()
                         ->default('pcs')
                         ->maxLength(50),
                     TextInput::make('unit_price')
-                        ->label('Harga Satuan')
+                        ->label('Unit Price')
                         ->prefix('Rp')
                         ->numeric()
                         ->minValue(0),
                     FileUpload::make('image')
-                        ->label('Foto Barang')
+                        ->label('Item Photo')
                         ->image()
                         ->directory('items')
                         ->imageEditor()
                         ->columnSpanFull(),
                 ])
                 ->columns(2),
-            Section::make('Kontrol Stok')
-                ->description('Status stok dihitung otomatis dari stok saat ini, minimal stok, dan safety stock.')
+            Section::make('Stock Control')
+                ->description('Stock status is automatically calculated from current stock, minimum stock, and safety stock.')
                 ->schema([
                     TextInput::make('stock')
-                        ->label('Stok Saat Ini')
+                        ->label('Current Stock')
                         ->required()
                         ->numeric()
                         ->minValue(0)
                         ->default(0),
                     TextInput::make('min_stock')
-                        ->label('Minimal Stok')
+                        ->label('Minimum Stock')
                         ->required()
                         ->numeric()
                         ->minValue(0)
@@ -107,7 +107,7 @@ class ItemResource extends Resource
                         ->numeric()
                         ->minValue(0)
                         ->default(0)
-                        ->helperText('Jika stok <= safety stock maka status Menipis.'),
+                        ->helperText('If stock <= safety stock, status becomes Low.'),
                 ])
                 ->columns(3),
         ]);
@@ -116,39 +116,39 @@ class ItemResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->heading('Daftar Barang')
-            ->description('Kelola semua data barang di sini')
+            ->heading('Items List')
+            ->description('Manage all item data here')
             ->headerActions([
                 Action::make('create')
-                    ->label('Tambah Barang')
+                    ->label('Add Item')
                     ->icon('heroicon-o-plus')
                     ->color('primary')
                     ->url(fn(): string => static::getUrl('create')),
             ])
             ->columns([
                 ImageColumn::make('image')
-                    ->label('Foto')
+                    ->label('Photo')
                     ->alignStart()
                     ->circular(),
                 TextColumn::make('code')
-                    ->label('Kode')
+                    ->label('Code')
                     ->alignStart()
                     ->searchable()
                     ->sortable()
                     ->copyable(),
                 TextColumn::make('name')
-                    ->label('Nama Barang')
+                    ->label('Item Name')
                     ->alignStart()
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('category.name')
-                    ->label('Kategori')
+                    ->label('Category')
                     ->alignCenter()
                     ->badge()
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('stock')
-                    ->label('Stok')
+                    ->label('Stock')
                     ->alignStart()
                     ->numeric()
                     ->sortable()
@@ -176,7 +176,7 @@ class ItemResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('category_id')
-                    ->label('Kategori')
+                    ->label('Category')
                     ->relationship('category', 'name')
                     ->searchable()
                     ->preload(),
@@ -186,10 +186,10 @@ class ItemResource extends Resource
                     ->searchable()
                     ->preload(),
                 Filter::make('need_restock')
-                    ->label('Perlu Restock')
+                    ->label('Needs Restock')
                     ->query(fn(Builder $query): Builder => $query->needRestock()),
                 Filter::make('low_stock')
-                    ->label('Menipis')
+                    ->label('Low Stock')
                     ->query(fn(Builder $query): Builder => $query->lowStock()),
             ])
             ->recordActions([

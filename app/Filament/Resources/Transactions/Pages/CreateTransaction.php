@@ -30,6 +30,6 @@ class CreateTransaction extends CreateRecord
 
     protected function getCreatedNotificationTitle(): ?string
     {
-        return 'Transaksi berhasil dicatat dan stok sudah diperbarui.';
+        return 'Transaction recorded successfully and stock updated.';
     }
 }

@@ -16,16 +16,16 @@ class ReportExportController extends Controller
             $handle = fopen('php://output', 'w');
 
             fputcsv($handle, [
-                'Tanggal',
-                'Kode Barang',
-                'Nama Barang',
-                'Kategori',
-                'Jenis Transaksi',
-                'Jumlah',
-                'Stok Sebelum',
-                'Stok Sesudah',
-                'Petugas',
-                'Keterangan',
+                'Date',
+                'Item Code',
+                'Item Name',
+                'Category',
+                'Transaction Type',
+                'Quantity',
+                'Stock Before',
+                'Stock After',
+                'Officer',
+                'Notes',
             ]);
 
             Transaction::query()

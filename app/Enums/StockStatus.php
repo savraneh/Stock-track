@@ -11,9 +11,9 @@ enum StockStatus: string
     public function label(): string
     {
         return match ($this) {
-            self::Safe => 'Aman',
-            self::Low => 'Menipis',
-            self::Restock => 'Perlu Restock',
+            self::Safe => 'Safe',
+            self::Low => 'Low',
+            self::Restock => 'Needs Restock',
         };
     }
 

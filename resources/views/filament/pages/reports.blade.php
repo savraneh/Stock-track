@@ -16,21 +16,21 @@
     </div>
     <div class="rounded-2xl border border-slate-200 bg-white shadow-sm">
         <div class="border-b border-slate-200 p-5">
-            <h2 class="text-lg font-semibold text-slate-900">Histori Transaksi Terbaru</h2>
-            <p class="text-sm text-slate-500">Gunakan tombol di kanan atas untuk export laporan.</p>
+            <h2 class="text-lg font-semibold text-slate-900">Recent Transaction History</h2>
+            <p class="text-sm text-slate-500">Use the button on the top right to export reports.</p>
         </div>
         <div class="overflow-x-auto">
             <table class="stock-page-table">
                 <thead class="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
                     <tr>
-                        <th class="stock-table-left">Tanggal</th>
-                        <th class="stock-table-left">Barang</th>
-                        <th class="stock-table-center">Kategori</th>
-                        <th class="stock-table-center">Tipe</th>
-                        <th class="stock-table-center">Jumlah</th>
-                        <th class="stock-table-center">Sebelum</th>
-                        <th class="stock-table-center">Sesudah</th>
-                        <th class="stock-table-center">Petugas</th>
+                        <th class="stock-table-left">Date</th>
+                        <th class="stock-table-left">Item</th>
+                        <th class="stock-table-center">Category</th>
+                        <th class="stock-table-center">Type</th>
+                        <th class="stock-table-center">Quantity</th>
+                        <th class="stock-table-center">Before</th>
+                        <th class="stock-table-center">After</th>
+                        <th class="stock-table-center">Officer</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
@@ -54,7 +54,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="8" class="px-6 py-10 text-center text-slate-500">Belum ada histori transaksi.</td>
+                        <td colspan="8" class="px-6 py-10 text-center text-slate-500">No transaction history yet.</td>
                     </tr>
                     @endforelse
                 </tbody>
