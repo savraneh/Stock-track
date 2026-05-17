@@ -100,12 +100,14 @@ class TransactionResource extends Resource
                     ->sortable(),
                 TextColumn::make('item.category.name')
                     ->label('Category')
-                    ->alignCenter()
+                    ->alignStart()
                     ->badge()
                     ->toggleable(),
                 TextColumn::make('type')
                     ->label('Type')
                     ->alignCenter()
+                    ->extraCellAttributes(['class' => 'whitespace-nowrap'])
+                    ->extraHeaderAttributes(['class' => 'whitespace-nowrap'])
                     ->badge()
                     ->formatStateUsing(fn(TransactionType $state): string => $state->label())
                     ->color(fn(TransactionType $state): string => $state->color()),
@@ -126,7 +128,9 @@ class TransactionResource extends Resource
                     ->sortable(),
                 TextColumn::make('user.name')
                     ->label('Officer')
-                    ->alignCenter()
+                    ->alignStart()
+                    ->extraCellAttributes(['class' => 'whitespace-nowrap'])
+                    ->extraHeaderAttributes(['class' => 'whitespace-nowrap'])
                     ->placeholder('-')
                     ->toggleable(),
             ])

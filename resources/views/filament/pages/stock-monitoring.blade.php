@@ -28,7 +28,7 @@
                     <tr>
                         <th class="stock-table-left">Code</th>
                         <th class="stock-table-left">Item</th>
-                        <th class="stock-table-center">Category</th>
+                        <th class="stock-table-left">Category</th>
                         <th class="stock-table-left">Stock</th>
                         <th class="stock-table-center">Min</th>
                         <th class="stock-table-center">Safety</th>
@@ -41,7 +41,7 @@
                         <tr class="hover:bg-slate-50">
                             <td class="stock-table-left font-mono text-slate-700">{{ $item->code }}</td>
                             <td class="stock-table-left font-medium text-slate-900">{{ $item->name }}</td>
-                            <td class="stock-table-center text-slate-600">{{ $item->category?->name ?? '-' }}</td>
+                            <td class="stock-table-left text-slate-600">{{ $item->category?->name ?? '-' }}</td>
                             <td class="stock-table-left font-semibold text-slate-900">{{ $item->stock }} {{ $item->unit }}</td>
                             <td class="stock-table-center text-slate-600">{{ $item->min_stock }}</td>
                             <td class="stock-table-center text-slate-600">{{ $item->safe_stock }}</td>

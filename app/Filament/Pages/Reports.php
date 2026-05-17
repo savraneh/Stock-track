@@ -23,6 +23,14 @@ class Reports extends Page
 
     protected string $view = 'filament.pages.reports';
 
+    public function getBreadcrumbs(): array
+    {
+        return [
+            'Analytics & Reports',
+            'Reports',
+        ];
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->canViewAnalytics() ?? false;

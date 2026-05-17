@@ -22,6 +22,14 @@ class StockMonitoring extends Page
 
     protected string $view = 'filament.pages.stock-monitoring';
 
+    public function getBreadcrumbs(): array
+    {
+        return [
+            'Stock Control',
+            'Stock Monitoring',
+        ];
+    }
+
     public function getCriticalItems(): Collection
     {
         return Item::query()

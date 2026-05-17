@@ -1,5 +1,5 @@
 <x-filament-widgets::widget>
-    <section class="stock-dashboard-panel stock-equal-dashboard-panel h-full">
+    <section class="stock-dashboard-panel stock-alerts-panel h-full">
         <div class="mb-6 flex items-start justify-between gap-4">
             <div>
                 <h2 class="stock-panel-title">Critical Alerts</h2>

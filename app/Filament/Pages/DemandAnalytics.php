@@ -22,6 +22,14 @@ class DemandAnalytics extends Page
 
     protected string $view = 'filament.pages.demand-analytics';
 
+    public function getBreadcrumbs(): array
+    {
+        return [
+            'Analytics & Reports',
+            'Demand Analytics',
+        ];
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->canViewAnalytics() ?? false;

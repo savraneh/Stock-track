@@ -15,11 +15,11 @@ class StockMovementChart extends ChartWidget
 
     protected string $color = 'primary';
 
-    protected ?string $maxHeight = '300px';
+    protected ?string $maxHeight = '420px';
 
     protected int|string|array $columnSpan = [
         'default' => 'full',
-        'lg' => 6,
+        'lg' => 8,
     ];
 
     protected static ?int $sort = 2;
@@ -41,14 +41,14 @@ class StockMovementChart extends ChartWidget
         $days = (int) ($this->filter ?? 7);
         $period = collect(CarbonPeriod::create(now()->subDays($days - 1)->startOfDay(), now()->startOfDay()));
 
-        $labels = $period->map(fn ($date): string => $days > 7 ? $date->format('d M') : $date->format('D'))->all();
+        $labels = $period->map(fn($date): string => $days > 7 ? $date->format('d M') : $date->format('D'))->all();
 
-        $stockIn = $period->map(fn ($date): int => (int) Transaction::query()
+        $stockIn = $period->map(fn($date): int => (int) Transaction::query()
             ->where('type', TransactionType::StockIn->value)
             ->whereDate('created_at', $date)
             ->sum('quantity'))->all();
 
-        $stockOut = $period->map(fn ($date): int => (int) Transaction::query()
+        $stockOut = $period->map(fn($date): int => (int) Transaction::query()
             ->where('type', TransactionType::StockOut->value)
             ->whereDate('created_at', $date)
             ->sum('quantity'))->all();

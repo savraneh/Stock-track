@@ -2,6 +2,10 @@
 
 namespace App\Filament\Widgets;
 
+use App\Filament\Pages\StockMonitoring;
+use App\Filament\Resources\Categories\CategoryResource;
+use App\Filament\Resources\Items\ItemResource;
+use App\Filament\Resources\Transactions\TransactionResource;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\Transaction;
@@ -26,6 +30,7 @@ class StockStatsOverview extends Widget
                 'icon' => 'heroicon-o-cube',
                 'tone' => 'primary',
                 'description' => 'All warehouse items',
+                'url' => ItemResource::getUrl(),
             ],
             [
                 'label' => 'Low Stock',
@@ -33,6 +38,7 @@ class StockStatsOverview extends Widget
                 'icon' => 'heroicon-o-exclamation-triangle',
                 'tone' => 'danger',
                 'description' => 'Need attention',
+                'url' => StockMonitoring::getUrl(),
             ],
             [
                 'label' => "Today's Transactions",
@@ -40,6 +46,7 @@ class StockStatsOverview extends Widget
                 'icon' => 'heroicon-o-receipt-percent',
                 'tone' => 'tertiary',
                 'description' => 'Stock activity today',
+                'url' => TransactionResource::getUrl(),
             ],
             [
                 'label' => 'Total Categories',
@@ -47,6 +54,7 @@ class StockStatsOverview extends Widget
                 'icon' => 'heroicon-o-tag',
                 'tone' => 'secondary',
                 'description' => 'Master category data',
+                'url' => CategoryResource::getUrl(),
             ],
         ];
     }

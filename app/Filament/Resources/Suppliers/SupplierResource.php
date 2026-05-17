@@ -77,22 +77,27 @@ class SupplierResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->label('Supplier')
+                    ->alignStart()
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('contact_person')
                     ->label('CP')
+                    ->alignStart()
                     ->searchable()
                     ->placeholder('-'),
                 TextColumn::make('phone')
                     ->label('Phone')
+                    ->alignCenter()
                     ->searchable()
                     ->placeholder('-'),
                 TextColumn::make('email')
                     ->label('Email')
+                    ->alignStart()
                     ->searchable()
                     ->placeholder('-'),
                 TextColumn::make('items_count')
                     ->label('Item Count')
+                    ->alignCenter()
                     ->counts('items')
                     ->badge()
                     ->sortable(),

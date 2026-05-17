@@ -128,7 +128,7 @@ class ItemResource extends Resource
             ->columns([
                 ImageColumn::make('image')
                     ->label('Photo')
-                    ->alignStart()
+                    ->alignCenter()
                     ->circular(),
                 TextColumn::make('code')
                     ->label('Code')
@@ -143,7 +143,7 @@ class ItemResource extends Resource
                     ->sortable(),
                 TextColumn::make('category.name')
                     ->label('Category')
-                    ->alignCenter()
+                    ->alignStart()
                     ->badge()
                     ->sortable()
                     ->searchable(),

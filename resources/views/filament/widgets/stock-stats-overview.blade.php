@@ -1,7 +1,9 @@
 <x-filament-widgets::widget>
     <div class="stock-dashboard-stats grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
         @foreach ($this->getStats() as $stat)
-            <section class="stock-stat-card stock-tone-{{ $stat['tone'] }}">
+            <a
+                href="{{ $stat['url'] }}"
+                class="stock-stat-card stock-tone-{{ $stat['tone'] }} block transition duration-150 hover:shadow-md hover:-translate-y-0.5">
                 <div class="flex flex-1 flex-col">
                     <div class="flex items-start justify-between gap-4">
                         <div class="min-w-0">
@@ -18,7 +20,7 @@
                         <p class="stock-stat-description">{{ $stat['description'] }}</p>
                     </div>
                 </div>
-            </section>
+            </a>
         @endforeach
     </div>
 </x-filament-widgets::widget>

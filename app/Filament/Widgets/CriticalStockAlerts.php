@@ -13,7 +13,7 @@ class CriticalStockAlerts extends Widget
 
     protected int|string|array $columnSpan = [
         'default' => 'full',
-        'lg' => 6,
+        'lg' => 4,
     ];
 
     protected static ?int $sort = 3;
@@ -27,7 +27,7 @@ class CriticalStockAlerts extends Widget
             ->critical()
             ->orderBy('stock')
             ->orderBy('name')
-            ->limit(4)
+            ->limit(3)
             ->get();
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Transactions\Pages;
 
+use App\Filament\Concerns\HasNavigationBreadcrumbs;
 use App\Filament\Resources\Transactions\TransactionResource;
 use App\Models\Item;
 use App\Models\Transaction;
@@ -11,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class CreateTransaction extends CreateRecord
 {
+    use HasNavigationBreadcrumbs;
+
     protected static string $resource = TransactionResource::class;
 
     protected ?bool $hasDatabaseTransactions = false;

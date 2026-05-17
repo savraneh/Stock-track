@@ -88,7 +88,7 @@ class CategoryResource extends Resource
                     ->sortable(),
                 TextColumn::make('updated_at')
                     ->label('Last Updated')
-                    ->alignCenter()
+                    ->alignStart()
                     ->dateTime('d M Y H:i')
                     ->sortable(),
             ])
