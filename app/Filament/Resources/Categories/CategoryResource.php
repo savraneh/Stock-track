@@ -1,0 +1,128 @@
+<?php
+
+namespace App\Filament\Resources\Categories;
+
+use App\Filament\Resources\Categories\Pages\CreateCategory;
+use App\Filament\Resources\Categories\Pages\EditCategory;
+use App\Filament\Resources\Categories\Pages\ListCategories;
+use App\Models\Category;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+use \Filament\Actions\Action;
+use UnitEnum;
+
+class CategoryResource extends Resource
+{
+    protected static ?string $model = Category::class;
+
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-folder';
+
+    protected static string|UnitEnum|null $navigationGroup = 'Inventory';
+
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $navigationLabel = 'Categories';
+
+    protected static ?string $recordTitleAttribute = 'name';
+
+    protected static ?string $modelLabel = 'Kategori';
+
+    protected static ?string $pluralModelLabel = 'Kategori';
+
+    public static function form(Schema $schema): Schema
+    {
+        return $schema->components([
+            TextInput::make('name')
+                ->label('Nama Kategori')
+                ->required()
+                ->maxLength(255)
+                ->unique(ignoreRecord: true),
+            TextInput::make('storage_zone')
+                ->label('Zona Penyimpanan')
+                ->placeholder('Contoh: Rak A / Gudang 1')
+                ->maxLength(255),
+            Textarea::make('description')
+                ->label('Deskripsi')
+                ->rows(4)
+                ->columnSpanFull(),
+        ])->columns(2);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->heading('Daftar Kategori')
+            ->description('Kelola semua data kategori penyimpanan barang di sini')
+            ->headerActions([
+                Action::make('create')
+                    ->label('Tambah Kategori')
+                    ->icon('heroicon-o-plus')
+                    ->color('primary')
+                    ->url(fn(): string => static::getUrl('create')),
+            ])
+            ->columns([
+                TextColumn::make('name')
+                    ->label('Kategori')
+                    ->alignStart()
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('storage_zone')
+                    ->label('Zona')
+                    ->alignCenter()
+                    ->badge()
+                    ->placeholder('-')
+                    ->searchable(),
+                TextColumn::make('items_count')
+                    ->label('Jumlah Barang')
+                    ->alignCenter()
+                    ->counts('items')
+                    ->badge()
+                    ->sortable(),
+                TextColumn::make('updated_at')
+                    ->label('Update Terakhir')
+                    ->alignCenter()
+                    ->dateTime('d M Y H:i')
+                    ->sortable(),
+            ])
+            ->recordActions([
+                EditAction::make()->visible(fn(): bool => auth()->user()?->canManageMasterData() ?? false),
+            ])
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make()->visible(fn(): bool => auth()->user()?->canManageMasterData() ?? false),
+                ]),
+            ]);
+    }
+
+    public static function canCreate(): bool
+    {
+        return auth()->user()?->canManageMasterData() ?? false;
+    }
+
+    public static function canEdit($record): bool
+    {
+        return auth()->user()?->canManageMasterData() ?? false;
+    }
+
+    public static function canDelete($record): bool
+    {
+        return auth()->user()?->canManageMasterData() ?? false;
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => ListCategories::route('/'),
+            'create' => CreateCategory::route('/create'),
+            'edit' => EditCategory::route('/{record}/edit'),
+        ];
+    }
+}
