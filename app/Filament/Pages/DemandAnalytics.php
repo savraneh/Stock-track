@@ -18,7 +18,7 @@ class DemandAnalytics extends Page
 
     protected static ?string $navigationLabel = 'Demand Analytics';
 
-    protected static ?string $title = 'High Demand & Low Demand Analysis';
+    protected static ?string $title = 'Demand Analysis';
 
     protected string $view = 'filament.pages.demand-analytics';
 
